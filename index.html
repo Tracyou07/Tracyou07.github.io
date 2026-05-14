@@ -3,614 +3,1069 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jinhao You — AI Researcher</title>
+  <title>Jinhao You — A Research Folio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ── Reset & Base ── */
+    /* ─────────────────────────────────────────────
+       A Research Folio — editorial / journal aesthetic
+       Typefaces: Fraunces (display), Newsreader (body),
+       JetBrains Mono (apparatus)
+       ───────────────────────────────────────────── */
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --grad-start: #6366f1;
-      --grad-mid:   #8b5cf6;
-      --grad-end:   #06b6d4;
-      --accent:     #6366f1;
-      --accent2:    #06b6d4;
-      --bg:         #f8fafc;
-      --surface:    #ffffff;
-      --text:       #1e293b;
-      --muted:      #64748b;
-      --border:     #e2e8f0;
-      --radius:     14px;
-      --shadow:     0 4px 24px rgba(99,102,241,.10);
-      --shadow-lg:  0 8px 40px rgba(99,102,241,.18);
+      --paper:        #f4f1e8;
+      --paper-deep:   #ebe5d3;
+      --paper-edge:   #d9d2bd;
+      --ink:          #1a1612;
+      --ink-soft:     #3a342c;
+      --ink-mute:     #847a6a;
+      --rule:         #c4bba2;
+      --crimson:      #9c2a2a;
+      --crimson-deep: #6e1a1a;
+      --sage:         #4e5a36;
+      --highlight:    #f0e3a8;
+
+      --serif-display: 'Fraunces', 'Times New Roman', serif;
+      --serif-body:    'Newsreader', Georgia, serif;
+      --mono:          'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      --measure: 68ch;
+      --gutter:  clamp(1.25rem, 4vw, 3rem);
     }
+
     html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: var(--serif-body);
+      font-size: 18px;
       line-height: 1.7;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at top left, rgba(156,42,42,.04), transparent 60%),
+        radial-gradient(ellipse at bottom right, rgba(78,90,54,.05), transparent 60%),
+        var(--paper);
+      background-attachment: fixed;
+      font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "onum" 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
-    a { color: var(--accent); text-decoration: none; transition: color .2s; }
-    a:hover { color: var(--accent2); }
 
-    /* ── Navbar ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(248,250,252,.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 60px;
-    }
-    .nav-brand {
-      font-weight: 700; font-size: 1.1rem;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .nav-links { display: flex; gap: 2rem; }
-    .nav-links a {
-      font-size: .92rem; font-weight: 500; color: var(--muted);
-      padding: 4px 0; border-bottom: 2px solid transparent;
-      transition: color .2s, border-color .2s;
-    }
-    .nav-links a:hover { color: var(--accent); border-color: var(--accent); }
-
-    /* ── Hero ── */
-    #hero {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #eef2ff 0%, #f0fdf4 40%, #ecfeff 100%);
-      display: flex; align-items: center; justify-content: center;
-      padding: 80px 2rem 2rem;
-      position: relative; overflow: hidden;
-    }
-    #hero::before {
+    /* paper grain — subtle SVG noise overlay */
+    body::before {
       content: '';
-      position: absolute; top: -120px; right: -120px;
-      width: 500px; height: 500px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(99,102,241,.15) 0%, transparent 70%);
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 .35 0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='.5'/></svg>");
+      opacity: .35;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: multiply;
     }
-    #hero::after {
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─────────────  MASTHEAD  ───────────── */
+    .masthead {
+      position: relative; z-index: 5;
+      border-bottom: 1px solid var(--ink);
+      padding: 1.1rem var(--gutter) .9rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: end;
+      gap: 1rem;
+      background: var(--paper);
+    }
+    .masthead-meta {
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+    .masthead-meta.right { text-align: right; }
+    .masthead-title {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 144, "wght" 500, "SOFT" 20;
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      letter-spacing: -.01em;
+      text-align: center;
+      font-style: italic;
+      white-space: nowrap;
+    }
+    .masthead-title em {
+      font-style: normal;
+      font-variation-settings: "opsz" 144, "wght" 700, "WONK" 1;
+    }
+
+    /* sub navigation rule */
+    .submast {
+      position: sticky; top: 0; z-index: 6;
+      backdrop-filter: blur(8px);
+      background: rgba(244,241,232,.86);
+      border-bottom: 1px solid var(--rule);
+      padding: .55rem var(--gutter);
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .submast-nav { display: flex; gap: 1.8rem; }
+    .submast-nav a {
+      position: relative;
+      padding: 2px 0;
+      transition: color .25s;
+    }
+    .submast-nav a::after {
       content: '';
-      position: absolute; bottom: -80px; left: -80px;
-      width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(6,182,212,.12) 0%, transparent 70%);
+      position: absolute; left: 0; right: 0; bottom: -2px;
+      height: 1px;
+      background: var(--crimson);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s cubic-bezier(.65,.05,.36,1);
     }
-    .hero-inner {
-      max-width: 820px; width: 100%;
-      display: flex; flex-direction: column; align-items: center;
-      text-align: center; gap: 1.5rem; position: relative; z-index: 1;
-    }
-    .avatar {
-      width: 110px; height: 110px; border-radius: 50%;
-      object-fit: cover; object-position: center top;
-      box-shadow: var(--shadow-lg);
-      flex-shrink: 0;
-      border: 3px solid #fff;
-    }
-    h1 {
-      font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -.02em;
-      background: linear-gradient(135deg, var(--grad-start) 0%, var(--grad-mid) 50%, var(--grad-end) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .hero-subtitle {
-      font-size: 1.15rem; color: var(--muted); max-width: 560px; line-height: 1.8;
-    }
-    .hero-tags {
-      display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center;
-    }
-    .tag {
-      padding: .3rem .9rem; border-radius: 999px;
-      font-size: .82rem; font-weight: 500;
-      background: linear-gradient(135deg, rgba(99,102,241,.12), rgba(6,182,212,.10));
-      border: 1px solid rgba(99,102,241,.25); color: var(--accent);
-    }
-    .hero-contact {
-      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
-      font-size: .9rem;
-    }
-    .contact-item {
-      display: flex; align-items: center; gap: .4rem;
-      color: var(--muted); padding: .4rem .9rem;
-      background: var(--surface); border-radius: 8px;
-      border: 1px solid var(--border); box-shadow: var(--shadow);
-    }
-    .contact-item svg { flex-shrink: 0; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: .5rem;
-      padding: .7rem 1.8rem; border-radius: 999px;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      color: #fff; font-weight: 600; font-size: .95rem;
-      box-shadow: 0 4px 15px rgba(99,102,241,.35);
-      transition: transform .2s, box-shadow .2s;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99,102,241,.45); color: #fff; }
+    .submast-nav a:hover { color: var(--crimson); }
+    .submast-nav a:hover::after { transform: scaleX(1); }
+    .submast-edition { opacity: .7; }
 
-    /* ── Section shared ── */
-    section { padding: 80px 2rem; }
-    .section-inner { max-width: 900px; margin: 0 auto; }
-    .section-header { text-align: center; margin-bottom: 3rem; }
-    .section-label {
-      display: inline-block; margin-bottom: .6rem;
-      font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    /* ─────────────  COVER  ───────────── */
+    .cover {
+      position: relative; z-index: 2;
+      padding: clamp(3rem, 9vw, 7rem) var(--gutter) clamp(3rem, 8vw, 6rem);
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
     }
-    h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; letter-spacing: -.02em; }
-    .section-desc { color: var(--muted); margin-top: .5rem; font-size: .97rem; }
-
-    /* ── About ── */
-    #about { background: var(--surface); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    @media (min-width: 900px) {
+      .cover { grid-template-columns: 1fr 1.4fr; gap: 4rem; }
     }
-    @media(max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
-
-    .edu-card {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.4rem 1.5rem;
-      box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+    .cover-kicker {
+      font-family: var(--mono);
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .8rem;
     }
-    .edu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .edu-school {
-      font-weight: 700; font-size: 1rem;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    .cover-kicker::before {
+      content: ''; width: 28px; height: 1px;
+      background: var(--crimson);
     }
-    .edu-degree { font-size: .92rem; color: var(--text); margin-top: .2rem; }
-    .edu-meta { font-size: .82rem; color: var(--muted); margin-top: .4rem; }
-    .edu-badge {
-      display: inline-block; margin-top: .5rem;
-      padding: .15rem .7rem; border-radius: 999px; font-size: .75rem; font-weight: 600;
-      background: linear-gradient(135deg, rgba(99,102,241,.12), rgba(6,182,212,.10));
-      border: 1px solid rgba(99,102,241,.2); color: var(--accent);
+    .cover-name {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 144, "wght" 320, "SOFT" 30;
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      line-height: .92;
+      letter-spacing: -.035em;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .cover-name .ampersand {
+      font-style: italic;
+      font-variation-settings: "opsz" 144, "wght" 350, "WONK" 1, "SOFT" 100;
+      color: var(--crimson);
+    }
+    .cover-tagline {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 36, "wght" 350;
+      font-style: italic;
+      font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+      color: var(--ink-soft);
+      max-width: 32ch;
+      line-height: 1.3;
     }
 
-    .skills-section { margin-top: 2.5rem; }
-    .skills-section h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
-    .skill-group { margin-bottom: 1rem; }
-    .skill-group-label { font-size: .8rem; font-weight: 600; color: var(--muted); margin-bottom: .4rem; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: .45rem; }
-    .skill-tag {
-      padding: .25rem .75rem; border-radius: 6px; font-size: .8rem; font-weight: 500;
-      background: linear-gradient(135deg, rgba(99,102,241,.08), rgba(6,182,212,.06));
-      border: 1px solid rgba(99,102,241,.18); color: var(--text);
+    .cover-body {
+      border-top: 1px solid var(--ink);
+      padding-top: 1.5rem;
+    }
+    .cover-body .lede {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      margin-bottom: 1.4rem;
+    }
+    .cover-body .lede::first-letter {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 144, "wght" 700, "WONK" 1;
+      font-size: 4.6rem;
+      float: left;
+      line-height: .85;
+      padding: .35rem .6rem 0 0;
+      color: var(--crimson);
     }
 
-    .awards-list { margin-top: 2.5rem; }
-    .awards-list h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
-    .award-item {
-      display: flex; align-items: flex-start; gap: .75rem;
-      padding: .75rem 0; border-bottom: 1px solid var(--border);
+    .topics {
+      display: flex; flex-wrap: wrap; gap: .55rem .9rem;
+      margin: 1.4rem 0 1.6rem;
+      padding-top: 1.2rem;
+      border-top: 1px dashed var(--rule);
     }
-    .award-item:last-child { border-bottom: none; }
-    .award-dot {
-      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: .55rem;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+    .topic {
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding: 3px 8px;
+      border: 1px solid var(--rule);
+      border-radius: 1px;
+      background: rgba(255,255,255,.35);
     }
-    .award-text { font-size: .9rem; flex: 1; }
-    .award-year {
-      font-size: .8rem; font-weight: 600; color: var(--accent);
-      background: rgba(99,102,241,.08); padding: .1rem .6rem; border-radius: 999px;
-      white-space: nowrap; flex-shrink: 0;
+    .topic.featured { color: var(--crimson); border-color: var(--crimson); }
+
+    .colophon-line {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .04em;
+      color: var(--ink-soft);
+    }
+    .colophon-line strong {
+      display: block;
+      font-weight: 500;
+      color: var(--ink-mute);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .62rem;
+      margin-bottom: .25rem;
+    }
+    .colophon-line a:hover { color: var(--crimson); }
+    @media (max-width: 520px) {
+      .colophon-line { grid-template-columns: 1fr; }
     }
 
-    /* ── Publications ── */
-    #publications { background: linear-gradient(135deg, #f8faff 0%, #f0fdff 100%); }
-    .pub-list { display: flex; flex-direction: column; gap: 1.25rem; }
-    .pub-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.4rem 1.6rem;
-      box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
-      display: flex; gap: 1.2rem; align-items: flex-start;
+    /* ─────────────  SECTION SHELL  ───────────── */
+    section.folio {
+      position: relative; z-index: 2;
+      padding: clamp(3.5rem, 8vw, 6rem) var(--gutter);
+      border-top: 1px solid var(--ink);
     }
-    .pub-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-    .pub-num {
-      min-width: 36px; height: 36px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      display: flex; align-items: center; justify-content: center;
-      font-size: .82rem; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: .1rem;
-    }
-    .pub-body { flex: 1; }
-    .pub-title { font-weight: 700; font-size: .97rem; line-height: 1.5; color: var(--text); }
-    .pub-authors { font-size: .85rem; color: var(--muted); margin-top: .3rem; }
-    .pub-authors strong { color: var(--text); font-weight: 600; }
-    .pub-venue { font-size: .82rem; color: var(--muted); margin-top: .25rem; font-style: italic; }
-    .pub-links { display: flex; gap: .6rem; margin-top: .7rem; }
-    .pub-link {
-      display: inline-flex; align-items: center; gap: .3rem;
-      padding: .25rem .75rem; border-radius: 6px; font-size: .78rem; font-weight: 600;
-      transition: all .2s;
-    }
-    .pub-link.arxiv {
-      background: rgba(229,57,53,.08); color: #e53935;
-      border: 1px solid rgba(229,57,53,.2);
-    }
-    .pub-link.arxiv:hover { background: #e53935; color: #fff; }
-    .pub-link.conf {
-      background: rgba(99,102,241,.08); color: var(--accent);
-      border: 1px solid rgba(99,102,241,.2);
-    }
-    .pub-link.conf:hover { background: var(--accent); color: #fff; }
+    section.folio.tinted { background: var(--paper-deep); }
 
-    /* ── Research ── */
-    #research { background: var(--surface); }
-    .timeline { position: relative; padding-left: 2rem; }
-    .timeline::before {
-      content: '';
-      position: absolute; left: .5rem; top: 0; bottom: 0; width: 2px;
-      background: linear-gradient(to bottom, var(--grad-start), var(--grad-end));
-      border-radius: 2px;
+    .folio-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
     }
-    .tl-item { position: relative; margin-bottom: 2.5rem; }
-    .tl-dot {
-      position: absolute; left: -1.65rem; top: .3rem;
-      width: 14px; height: 14px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      border: 2px solid var(--surface); box-shadow: 0 0 0 3px rgba(99,102,241,.2);
-    }
-    .tl-card {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.4rem 1.6rem;
-      box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
-    }
-    .tl-card:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
-    .tl-header { display: flex; flex-wrap: wrap; align-items: flex-start; gap: .6rem; justify-content: space-between; }
-    .tl-org { font-weight: 700; font-size: 1rem; color: var(--text); }
-    .tl-place {
-      font-size: .8rem; font-weight: 600; color: var(--accent);
-      background: rgba(99,102,241,.08); padding: .2rem .7rem; border-radius: 999px;
-    }
-    .tl-role { font-size: .88rem; color: var(--muted); margin-top: .2rem; }
-    .tl-period {
-      font-size: .8rem; color: var(--muted); font-weight: 500;
-    }
-    .tl-research { margin-top: 1rem; }
-    .tl-research-title {
-      font-size: .88rem; font-weight: 700; color: var(--accent); margin-bottom: .5rem;
-      display: flex; align-items: center; gap: .4rem;
-    }
-    .tl-research-title::before {
-      content: '▸'; font-size: .7rem;
-    }
-    .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
-    .tl-bullets li {
-      font-size: .88rem; color: var(--text); padding-left: 1.1rem;
-      position: relative; line-height: 1.6;
-    }
-    .tl-bullets li::before {
-      content: '·'; position: absolute; left: 0;
-      color: var(--accent2); font-weight: 700; font-size: 1.1rem; line-height: 1.4;
+    @media (min-width: 900px) {
+      .folio-inner { grid-template-columns: 240px 1fr; gap: 4rem; }
     }
 
-    /* ── Footer ── */
-    footer {
-      background: linear-gradient(135deg, #1e1b4b, #0c4a6e);
-      color: rgba(255,255,255,.7);
-      text-align: center; padding: 2.5rem 1rem;
+    .folio-marker {
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      position: relative;
+    }
+    @media (min-width: 900px) {
+      .folio-marker { position: sticky; top: 4rem; align-self: start; }
+    }
+    .folio-marker .section-no {
+      display: block;
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 144, "wght" 800, "WONK" 1;
+      font-style: italic;
+      font-size: 3.2rem;
+      line-height: 1;
+      color: var(--crimson);
+      letter-spacing: -.04em;
+      margin-bottom: .5rem;
+    }
+    .folio-marker .section-title {
+      display: block;
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 36, "wght" 500;
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: .4rem 0 .6rem;
+      text-transform: none;
+    }
+    .folio-marker .section-desc {
+      font-family: var(--serif-body);
       font-size: .88rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      text-transform: none;
+      letter-spacing: 0;
+      max-width: 22ch;
     }
-    footer strong { color: #fff; }
-    footer a { color: rgba(255,255,255,.8); }
-    footer a:hover { color: #fff; }
 
-    /* ── Scroll reveal animation ── */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
+    /* ─────────────  BACKGROUND ENTRIES  ───────────── */
+    .entries { display: flex; flex-direction: column; gap: 2.2rem; }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 1.4rem;
+      align-items: baseline;
+      padding-bottom: 1.6rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .entry:last-child { border-bottom: none; }
+    .entry-when {
+      font-family: var(--mono);
+      font-size: .75rem;
+      letter-spacing: .06em;
+      color: var(--ink-mute);
+      padding-top: .6rem;
+    }
+    .entry-where {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 60, "wght" 500;
+      font-size: 1.5rem;
+      line-height: 1.2;
+      letter-spacing: -.015em;
+      color: var(--ink);
+    }
+    .entry-where em {
+      font-style: italic;
+      color: var(--crimson);
+      font-variation-settings: "opsz" 60, "wght" 500, "WONK" 1;
+    }
+    .entry-detail {
+      font-size: .95rem;
+      color: var(--ink-soft);
+      margin-top: .25rem;
+    }
+    .entry-tags {
+      margin-top: .55rem;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .entry-tags .pin {
+      display: inline-block;
+      color: var(--crimson);
+      margin-right: .35rem;
+    }
+    @media (max-width: 600px) {
+      .entry { grid-template-columns: 1fr; gap: .35rem; }
+      .entry-when { padding-top: 0; }
+    }
+
+    /* ─────────────  SKILLS APPARATUS  ───────────── */
+    .apparatus {
+      margin-top: 2.5rem;
+      padding-top: 1.6rem;
+      border-top: 2px solid var(--ink);
+    }
+    .apparatus-heading {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 1rem;
+    }
+    .apparatus-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 1.4rem;
+      padding: .7rem 0;
+      border-top: 1px dashed var(--rule);
+      align-items: baseline;
+    }
+    .apparatus-row:first-of-type { border-top: none; }
+    .apparatus-label {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 24, "wght" 500;
+      font-style: italic;
+      font-size: 1.02rem;
+      color: var(--ink);
+    }
+    .apparatus-items {
+      font-family: var(--mono);
+      font-size: .82rem;
+      color: var(--ink-soft);
+      letter-spacing: .02em;
+      line-height: 1.75;
+    }
+    .apparatus-items span:not(:last-child)::after {
+      content: '·';
+      color: var(--crimson);
+      margin: 0 .55rem;
+      font-weight: 700;
+    }
+    @media (max-width: 600px) {
+      .apparatus-row { grid-template-columns: 1fr; gap: .25rem; }
+    }
+
+    /* ─────────────  AWARDS LEDGER  ───────────── */
+    .ledger { margin-top: 2.5rem; }
+    .ledger-heading {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 1rem;
+    }
+    .ledger-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 90px;
+      gap: 1rem;
+      align-items: baseline;
+      padding: .85rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .ledger-row:last-child { border-bottom: 1px solid var(--rule); }
+    .ledger-no {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--ink-mute);
+      letter-spacing: .08em;
+    }
+    .ledger-text {
+      font-family: var(--serif-body);
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+    .ledger-year {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 36, "wght" 500;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--crimson);
+      text-align: right;
+    }
+
+    /* ─────────────  PUBLICATIONS  ───────────── */
+    .papers { display: flex; flex-direction: column; gap: 0; }
+    .paper {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 1.6rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--ink);
+    }
+    .paper:last-child { border-bottom: 1px solid var(--ink); }
+    .paper-no {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 144, "wght" 350, "WONK" 1;
+      font-style: italic;
+      font-size: 3.6rem;
+      line-height: .85;
+      color: var(--crimson);
+      letter-spacing: -.04em;
+    }
+    .paper-no::before { content: '№\00a0'; font-size: .35em; vertical-align: top; letter-spacing: 0; color: var(--ink-mute); font-style: normal; }
+    .paper-title {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 96, "wght" 480;
+      font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+      line-height: 1.18;
+      letter-spacing: -.018em;
+      color: var(--ink);
+      margin-bottom: .9rem;
+    }
+    .paper-authors {
+      font-family: var(--serif-body);
+      font-size: .98rem;
+      color: var(--ink-soft);
+      margin-bottom: .35rem;
+    }
+    .paper-authors em {
+      font-style: italic;
+      color: var(--crimson);
+      font-weight: 600;
+      border-bottom: 1px solid currentColor;
+    }
+    .paper-venue {
+      font-family: var(--mono);
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: .85rem;
+    }
+    .paper-venue strong { color: var(--sage); font-weight: 600; }
+    .paper-links {
+      display: flex; gap: .5rem; flex-wrap: wrap;
+    }
+    .paper-link {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      transition: background .25s, color .25s;
+      display: inline-flex; align-items: center; gap: .4rem;
+    }
+    .paper-link:hover { background: var(--ink); color: var(--paper); }
+    .paper-link.featured { border-color: var(--crimson); color: var(--crimson); }
+    .paper-link.featured:hover { background: var(--crimson); color: var(--paper); }
+    @media (max-width: 600px) {
+      .paper { grid-template-columns: 1fr; gap: .4rem; }
+      .paper-no { font-size: 2.6rem; }
+    }
+
+    /* ─────────────  RESEARCH CHAPTERS  ───────────── */
+    .chapters { display: flex; flex-direction: column; gap: 3rem; }
+    .chapter {
+      position: relative;
+      padding: 2rem 0 1rem;
+      border-top: 1px solid var(--ink);
+    }
+    .chapter-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+    .chapter-org {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 96, "wght" 500;
+      font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+      line-height: 1.18;
+      letter-spacing: -.015em;
+      max-width: 28ch;
+    }
+    .chapter-org em {
+      font-style: italic;
+      color: var(--crimson);
+      font-variation-settings: "opsz" 96, "wght" 500, "WONK" 1;
+    }
+    .chapter-role {
+      font-family: var(--serif-body);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--ink-soft);
+      margin-top: .25rem;
+    }
+    .chapter-meta {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      text-align: right;
+      line-height: 1.7;
+      flex-shrink: 0;
+    }
+    .chapter-meta .place { color: var(--sage); }
+
+    .chapter-strand {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+    .chapter-strand:last-child { margin-bottom: 0; }
+    .strand-mark {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-variation-settings: "opsz" 60, "wght" 600;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: var(--crimson);
+      padding-top: .1rem;
+    }
+    .strand-title {
+      font-family: var(--mono);
+      font-size: .76rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      margin-bottom: .8rem;
+      padding-bottom: .4rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .strand-points {
+      list-style: none;
+      display: flex; flex-direction: column; gap: .65rem;
+    }
+    .strand-points li {
+      position: relative;
+      padding-left: 1.5rem;
+      font-size: .96rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .strand-points li::before {
+      content: '⸻';
+      position: absolute; left: 0; top: -1px;
+      color: var(--crimson);
+      font-family: var(--serif-display);
+    }
+    .strand-points li strong {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 14, "wght" 700;
+      font-style: italic;
+      color: var(--ink);
+      font-size: 1rem;
+      letter-spacing: -.005em;
+    }
+
+    /* ─────────────  COLOPHON  ───────────── */
+    .colophon {
+      position: relative; z-index: 2;
+      border-top: 4px double var(--ink);
+      padding: 3.5rem var(--gutter) 3rem;
+      background: var(--paper);
+    }
+    .colophon-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media (min-width: 800px) {
+      .colophon-inner { grid-template-columns: 1.6fr 1fr 1fr; }
+    }
+    .colophon-mark {
+      font-family: var(--serif-display);
+      font-variation-settings: "opsz" 144, "wght" 700, "WONK" 1;
+      font-style: italic;
+      font-size: 4rem;
+      line-height: .9;
+      color: var(--crimson);
+      letter-spacing: -.04em;
+      margin-bottom: 1rem;
+    }
+    .colophon h4 {
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: .7rem;
+      font-weight: 500;
+    }
+    .colophon p, .colophon a {
+      font-size: .9rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .colophon a:hover { color: var(--crimson); }
+    .colophon-note {
+      grid-column: 1 / -1;
+      margin-top: 1rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .08em;
+      color: var(--ink-mute);
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+    }
+
+    /* ─────────────  ENTRANCE MOTION  ───────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal[data-delay="1"] { transition-delay: .08s; }
+    .reveal[data-delay="2"] { transition-delay: .16s; }
+    .reveal[data-delay="3"] { transition-delay: .24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    ::selection { background: var(--highlight); color: var(--ink); }
   </style>
 </head>
 <body>
 
-<!-- ── Navbar ── -->
-<nav>
-  <span class="nav-brand">Jinhao You</span>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#publications">Publications</a>
-    <a href="#research">Research</a>
+<!-- ───────────── MASTHEAD ───────────── -->
+<header class="masthead">
+  <div class="masthead-meta">
+    Vol. I &nbsp;·&nbsp; № 2025<br/>
+    A Research Folio
   </div>
-</nav>
+  <div class="masthead-title">
+    Jinhao <em>You</em>
+  </div>
+  <div class="masthead-meta right">
+    Philadelphia · Chengdu<br/>
+    Established MMXXV
+  </div>
+</header>
 
-<!-- ── Hero ── -->
-<section id="hero">
-  <div class="hero-inner">
-    <img class="avatar" src="证件照-1.jpg" alt="Jinhao You" />
-    <h1>Jinhao You</h1>
-    <p class="hero-subtitle">
-      MS in Electrical Engineering @ <strong>UPenn</strong> · AI Researcher focused on
-      Large Vision-Language Models, 3D Reconstruction, and Efficient Inference.
+<div class="submast">
+  <div class="submast-edition">A reading copy</div>
+  <nav class="submast-nav">
+    <a href="#background">§ 01 Background</a>
+    <a href="#publications">§ 02 Publications</a>
+    <a href="#research">§ 03 Research</a>
+  </nav>
+</div>
+
+<!-- ───────────── COVER ───────────── -->
+<section class="cover">
+  <div>
+    <div class="cover-kicker reveal">An AI Researcher's Folio</div>
+    <h1 class="cover-name reveal" data-delay="1">
+      Jinhao<br/>
+      <span class="ampersand">You</span>
+    </h1>
+    <p class="cover-tagline reveal" data-delay="2">
+      On vision, language, and the geometry of seeing.
     </p>
-    <div class="hero-tags">
-      <span class="tag">Large Vision-Language Models</span>
-      <span class="tag">Hallucination Mitigation</span>
-      <span class="tag">3D Reconstruction</span>
-      <span class="tag">Token Efficiency</span>
-      <span class="tag">Brain-Computer Interface</span>
+  </div>
+
+  <div class="cover-body reveal" data-delay="2">
+    <p class="lede">
+      Master's candidate in Electrical Engineering at the University of Pennsylvania, currently
+      reading at the GRASP Robotics Lab. My work concerns large vision–language models —
+      their hallucinations, their efficiencies, the latent geometry behind their seeing — and
+      the broader project of reconstructing 3D worlds from monocular evidence.
+    </p>
+
+    <div class="topics">
+      <span class="topic featured">Large Vision-Language Models</span>
+      <span class="topic">Hallucination Mitigation</span>
+      <span class="topic">3D Reconstruction</span>
+      <span class="topic">Token Efficiency</span>
+      <span class="topic">Brain-Computer Interfaces</span>
     </div>
-    <div class="hero-contact">
-      <span class="contact-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <a href="mailto:tracyou07@gmail.com">tracyou07@gmail.com</a>
-      </span>
-      <span class="contact-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+
+    <div class="colophon-line">
+      <div>
+        <strong>Correspondence</strong>
+        <a href="mailto:tracyou07@gmail.com">tracyou07@gmail.com</a><br/>
         <a href="mailto:you7@seas.upenn.edu">you7@seas.upenn.edu</a>
-      </span>
-      <span class="contact-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8 9.91a16 16 0 0 0 6 6l1-1a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        +86 13438880039
-      </span>
-    </div>
-    <a href="#publications" class="btn-primary">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      View Publications
-    </a>
-  </div>
-</section>
-
-<!-- ── About ── -->
-<section id="about">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="section-label">Background</span>
-      <h2>About Me</h2>
-      <p class="section-desc">Education, skills, and selected honors.</p>
-    </div>
-
-    <!-- Education -->
-    <div class="about-grid reveal">
-      <div class="edu-card">
-        <div class="edu-school">University of Pennsylvania</div>
-        <div class="edu-degree">M.S. in Electrical Engineering</div>
-        <div class="edu-meta">Philadelphia, USA &nbsp;·&nbsp; Sep 2025 – May 2027</div>
-        <span class="edu-badge">In Progress</span>
       </div>
-      <div class="edu-card">
-        <div class="edu-school">University of Glasgow</div>
-        <div class="edu-degree">B.Eng. (Hons) Electronics &amp; Electrical Engineering</div>
-        <div class="edu-meta">Glasgow, UK &nbsp;·&nbsp; Sep 2021 – Jul 2025</div>
-        <span class="edu-badge">Dual Degree</span>
-      </div>
-      <div class="edu-card" style="grid-column: span 2;">
-        <div class="edu-school">University of Electronic Science and Technology of China (UESTC)</div>
-        <div class="edu-degree">B.Eng. in Communication Engineering</div>
-        <div class="edu-meta">Chengdu, China &nbsp;·&nbsp; Sep 2021 – Jul 2025 &nbsp;·&nbsp; GPA: 3.75 / 4.00</div>
-        <span class="edu-badge">Dual Degree</span>
-      </div>
-    </div>
-
-    <!-- Skills -->
-    <div class="skills-section reveal">
-      <h3>Technical Skills</h3>
-      <div class="skill-group">
-        <div class="skill-group-label">Programming Languages</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">C</span>
-          <span class="skill-tag">C++</span>
-          <span class="skill-tag">MATLAB</span>
-          <span class="skill-tag">Markdown</span>
-        </div>
-      </div>
-      <div class="skill-group" style="margin-top:.9rem;">
-        <div class="skill-group-label">Deep Learning Frameworks</div>
-        <div class="skill-tags">
-          <span class="skill-tag">PyTorch</span>
-          <span class="skill-tag">TensorFlow</span>
-        </div>
-      </div>
-      <div class="skill-group" style="margin-top:.9rem;">
-        <div class="skill-group-label">Tools &amp; Platforms</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">Linux</span>
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">LaTeX</span>
-          <span class="skill-tag">Zotero</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Awards -->
-    <div class="awards-list reveal">
-      <h3>Selected Honors &amp; Awards</h3>
-      <div class="award-item">
-        <div class="award-dot"></div>
-        <div class="award-text">First-Class Academic Scholarships (Top 5%)</div>
-        <div class="award-year">2023</div>
-      </div>
-      <div class="award-item">
-        <div class="award-dot"></div>
-        <div class="award-text">1st Prize — Southwest China Division, National College IoT Competition</div>
-        <div class="award-year">2024</div>
-      </div>
-      <div class="award-item">
-        <div class="award-dot"></div>
-        <div class="award-text">2nd Prize — Sichuan Province, National Embedded Chip &amp; System Design Competition</div>
-        <div class="award-year">2022</div>
-      </div>
-      <div class="award-item">
-        <div class="award-dot"></div>
-        <div class="award-text">2nd Prize — Innovation &amp; Entrepreneurship Competition of the Free Trade Port</div>
-        <div class="award-year">2021</div>
+      <div>
+        <strong>Telegraph</strong>
+        +86 13438880039<br/>
+        GRASP Lab · UPenn
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Publications ── -->
-<section id="publications">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="section-label">Research Output</span>
-      <h2>Publications</h2>
-      <p class="section-desc">Peer-reviewed conference papers and arXiv preprints.</p>
-    </div>
-    <div class="pub-list">
+<!-- ───────────── § 01  BACKGROUND ───────────── -->
+<section class="folio" id="background">
+  <div class="folio-inner">
+    <aside class="folio-marker reveal">
+      <span class="section-no">§ 01</span>
+      <span class="section-title">Background</span>
+      <span class="section-desc">Three universities, two continents, one running argument with the data.</span>
+    </aside>
 
-      <div class="pub-card reveal">
-        <div class="pub-num">1</div>
-        <div class="pub-body">
-          <div class="pub-title">Mitigating Hallucinations via Inter-Layer Consistency Aggregation in Large Vision-Language Models</div>
-          <div class="pub-authors"><strong>Jinhao You</strong>, Kai Tang, et al.</div>
-          <div class="pub-venue">arXiv preprint · 2025</div>
-          <div class="pub-links">
-            <a href="https://arxiv.org/abs/2505.12343" target="_blank" class="pub-link arxiv">arXiv:2505.12343</a>
+    <div>
+      <div class="entries">
+        <article class="entry reveal">
+          <div class="entry-when">SEP 2025 — MAY 2027</div>
+          <div>
+            <div class="entry-where">University of <em>Pennsylvania</em></div>
+            <div class="entry-detail">M.S. in Electrical Engineering · Philadelphia, USA</div>
+            <div class="entry-tags"><span class="pin">▸</span> In progress · GRASP Lab affiliation</div>
+          </div>
+        </article>
+
+        <article class="entry reveal">
+          <div class="entry-when">SEP 2021 — JUL 2025</div>
+          <div>
+            <div class="entry-where">University of <em>Glasgow</em></div>
+            <div class="entry-detail">B.Eng. (Hons) Electronics &amp; Electrical Engineering · Glasgow, UK</div>
+            <div class="entry-tags"><span class="pin">▸</span> Dual-degree programme</div>
+          </div>
+        </article>
+
+        <article class="entry reveal">
+          <div class="entry-when">SEP 2021 — JUL 2025</div>
+          <div>
+            <div class="entry-where">University of <em>Electronic Science &amp; Technology of China</em></div>
+            <div class="entry-detail">B.Eng. in Communication Engineering · Chengdu, China · GPA 3.75 / 4.00</div>
+            <div class="entry-tags"><span class="pin">▸</span> Dual-degree programme</div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Skills apparatus -->
+      <div class="apparatus reveal">
+        <div class="apparatus-heading">Apparatus &nbsp;·&nbsp; The Tools at Hand</div>
+
+        <div class="apparatus-row">
+          <div class="apparatus-label">Languages</div>
+          <div class="apparatus-items">
+            <span>Python</span><span>C</span><span>C++</span><span>MATLAB</span><span>Markdown</span>
+          </div>
+        </div>
+        <div class="apparatus-row">
+          <div class="apparatus-label">Deep Learning</div>
+          <div class="apparatus-items">
+            <span>PyTorch</span><span>TensorFlow</span>
+          </div>
+        </div>
+        <div class="apparatus-row">
+          <div class="apparatus-label">Workshop</div>
+          <div class="apparatus-items">
+            <span>Git</span><span>Linux</span><span>Docker</span><span>LaTeX</span><span>Zotero</span>
           </div>
         </div>
       </div>
 
-      <div class="pub-card reveal">
-        <div class="pub-num">2</div>
-        <div class="pub-body">
-          <div class="pub-title">STAR: Stage-Wise Attention-Guided Token Reduction for Efficient Large Vision-Language Models Inference</div>
-          <div class="pub-authors">Yichen Guo, <strong>Jinhao You</strong>, et al.</div>
-          <div class="pub-venue">arXiv preprint · 2025</div>
-          <div class="pub-links">
-            <a href="https://arxiv.org/abs/2505.12359" target="_blank" class="pub-link arxiv">arXiv:2505.12359</a>
-          </div>
+      <!-- Honors ledger -->
+      <div class="ledger reveal">
+        <div class="ledger-heading">Ledger of Honours</div>
+
+        <div class="ledger-row">
+          <div class="ledger-no">i.</div>
+          <div class="ledger-text">First-Class Academic Scholarships (Top 5%)</div>
+          <div class="ledger-year">2023</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-no">ii.</div>
+          <div class="ledger-text">1st Prize — Southwest China Division, National College IoT Competition</div>
+          <div class="ledger-year">2024</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-no">iii.</div>
+          <div class="ledger-text">2nd Prize — Sichuan Province, National Embedded Chip &amp; System Design Competition</div>
+          <div class="ledger-year">2022</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-no">iv.</div>
+          <div class="ledger-text">2nd Prize — Innovation &amp; Entrepreneurship Competition of the Free Trade Port</div>
+          <div class="ledger-year">2021</div>
         </div>
       </div>
-
-      <div class="pub-card reveal">
-        <div class="pub-num">3</div>
-        <div class="pub-body">
-          <div class="pub-title">MAP: Mitigating Hallucinations in Large Vision-Language Models with Map-Level Attention Processing</div>
-          <div class="pub-authors">Chenxi Li, Yichen Guo, <strong>Jinhao You</strong>, et al.</div>
-          <div class="pub-venue">arXiv preprint · 2025</div>
-          <div class="pub-links">
-            <a href="https://arxiv.org/abs/2508.01653" target="_blank" class="pub-link arxiv">arXiv:2508.01653</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-card reveal">
-        <div class="pub-num">4</div>
-        <div class="pub-body">
-          <div class="pub-title">Strengthening Layer Interaction via Global-Layer Attention Network for Image Classification</div>
-          <div class="pub-authors"><strong>Jinhao You</strong>, Kai Tang, et al.</div>
-          <div class="pub-venue">IEEE 9th International Conference on Intelligent Computing and Signal Processing (ICSP 2024) · Accepted</div>
-          <div class="pub-links">
-            <a href="#" class="pub-link conf">IEEE ICSP 2024</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ── Research ── -->
-<section id="research">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="section-label">Experience</span>
-      <h2>Research Experience</h2>
-      <p class="section-desc">Lab affiliations and projects across three universities.</p>
+<!-- ───────────── § 02  PUBLICATIONS ───────────── -->
+<section class="folio tinted" id="publications">
+  <div class="folio-inner">
+    <aside class="folio-marker reveal">
+      <span class="section-no">§ 02</span>
+      <span class="section-title">Publications</span>
+      <span class="section-desc">Four pieces, all concerning what models see and what they merely imagine.</span>
+    </aside>
+
+    <div class="papers">
+      <article class="paper reveal">
+        <div class="paper-no">1</div>
+        <div>
+          <h3 class="paper-title">Mitigating Hallucinations via Inter-Layer Consistency Aggregation in Large Vision-Language Models</h3>
+          <p class="paper-authors"><em>Jinhao You</em>, Kai Tang, et al.</p>
+          <p class="paper-venue">arXiv preprint &nbsp;·&nbsp; <strong>2025</strong></p>
+          <div class="paper-links">
+            <a href="https://arxiv.org/abs/2505.12343" target="_blank" rel="noopener" class="paper-link featured">arXiv : 2505.12343</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <div class="paper-no">2</div>
+        <div>
+          <h3 class="paper-title">STAR — Stage-Wise Attention-Guided Token Reduction for Efficient Large Vision-Language Models Inference</h3>
+          <p class="paper-authors">Yichen Guo, <em>Jinhao You</em>, et al.</p>
+          <p class="paper-venue">arXiv preprint &nbsp;·&nbsp; <strong>2025</strong></p>
+          <div class="paper-links">
+            <a href="https://arxiv.org/abs/2505.12359" target="_blank" rel="noopener" class="paper-link featured">arXiv : 2505.12359</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <div class="paper-no">3</div>
+        <div>
+          <h3 class="paper-title">MAP — Mitigating Hallucinations in Large Vision-Language Models with Map-Level Attention Processing</h3>
+          <p class="paper-authors">Chenxi Li, Yichen Guo, <em>Jinhao You</em>, et al.</p>
+          <p class="paper-venue">arXiv preprint &nbsp;·&nbsp; <strong>2025</strong></p>
+          <div class="paper-links">
+            <a href="https://arxiv.org/abs/2508.01653" target="_blank" rel="noopener" class="paper-link featured">arXiv : 2508.01653</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <div class="paper-no">4</div>
+        <div>
+          <h3 class="paper-title">Strengthening Layer Interaction via Global-Layer Attention Network for Image Classification</h3>
+          <p class="paper-authors"><em>Jinhao You</em>, Kai Tang, et al.</p>
+          <p class="paper-venue">IEEE 9th International Conference on Intelligent Computing and Signal Processing &nbsp;·&nbsp; <strong>ICSP 2024 — Accepted</strong></p>
+          <div class="paper-links">
+            <a href="#" class="paper-link">IEEE · ICSP 2024</a>
+          </div>
+        </div>
+      </article>
     </div>
-    <div class="timeline">
+  </div>
+</section>
+
+<!-- ───────────── § 03  RESEARCH ───────────── -->
+<section class="folio" id="research">
+  <div class="folio-inner">
+    <aside class="folio-marker reveal">
+      <span class="section-no">§ 03</span>
+      <span class="section-title">Research</span>
+      <span class="section-desc">Three labs, in reverse chronology — the working notebook entries.</span>
+    </aside>
+
+    <div class="chapters">
 
       <!-- UPenn GRASP -->
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <div class="tl-header">
-            <div>
-              <div class="tl-org">GRASP Lab, Department of Robotics — UPenn</div>
-              <div class="tl-role">Graduate Research Assistant</div>
-            </div>
-            <div style="text-align:right;">
-              <div class="tl-place">Philadelphia, USA</div>
-              <div class="tl-period">Oct 2025 – Present</div>
-            </div>
+      <article class="chapter reveal">
+        <div class="chapter-head">
+          <div>
+            <h3 class="chapter-org">GRASP Lab <em>·</em> Department of Robotics</h3>
+            <div class="chapter-role">Graduate Research Assistant · University of Pennsylvania</div>
           </div>
-          <div class="tl-research">
-            <div class="tl-research-title">3D Reconstruction &amp; World-Model Prediction</div>
-            <ul class="tl-bullets">
-              <li>Investigating single-view and multi-view 3D reconstruction pipelines, benchmarking depth-based (DPT) and correspondence-based (DUST3R, CUT3R, Human3R) methods for consistent geometry from monocular images.</li>
-              <li>Reproducing modern 3D point correspondence methods to construct dense and temporally stable point clouds for downstream world-model prediction.</li>
-              <li>Building a world-model-style latent dynamics module to maintain temporal consistency across frames and reduce artifacts (mesh-body interpenetration, foot-sliding, geometry drift).</li>
+          <div class="chapter-meta">
+            <span class="place">Philadelphia, USA</span><br/>
+            Oct 2025 — present
+          </div>
+        </div>
+
+        <div class="chapter-strand">
+          <div class="strand-mark">¶</div>
+          <div>
+            <div class="strand-title">3D Reconstruction &amp; World-Model Prediction</div>
+            <ul class="strand-points">
+              <li>Investigating single-view and multi-view 3D reconstruction pipelines; benchmarking depth-based (DPT) and correspondence-based (DUST3R, CUT3R, Human3R) methods for consistent geometry from monocular images.</li>
+              <li>Reproducing modern 3D point-correspondence methods to construct dense, temporally stable point clouds for downstream world-model prediction.</li>
+              <li>Building a <strong>world-model-style latent dynamics module</strong> to maintain temporal consistency across frames and reduce artefacts — mesh-body interpenetration, foot-sliding, geometry drift.</li>
               <li>Exploring geometry-aware loss functions (Chamfer distance, normal consistency, contact constraints) to enforce physical plausibility in human–environment interactions.</li>
             </ul>
           </div>
         </div>
-      </div>
+      </article>
 
       <!-- De AI Lab -->
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <div class="tl-header">
-            <div>
-              <div class="tl-org">De Artificial Intelligence Lab</div>
-              <div class="tl-role">Undergraduate Research Assistant</div>
-            </div>
-            <div style="text-align:right;">
-              <div class="tl-place">Chengdu, China</div>
-              <div class="tl-period">Apr 2024 – Nov 2025</div>
-            </div>
+      <article class="chapter reveal">
+        <div class="chapter-head">
+          <div>
+            <h3 class="chapter-org">De <em>Artificial</em> Intelligence Lab</h3>
+            <div class="chapter-role">Undergraduate Research Assistant</div>
           </div>
-          <div class="tl-research">
-            <div class="tl-research-title">Research 1: Training-Free Decoding for Hallucination Mitigation in LVLMs</div>
-            <ul class="tl-bullets">
-              <li>Systematically analyzed mainstream decoding strategies (DoLa, VCD, DAMO, SPIN) on LLaVA, mPLUG-Owl2, InstructBLIP.</li>
-              <li><strong>DCLA:</strong> Designed an inter-layer decoding mechanism that aggregates cross-layer hidden states to construct dynamic semantic references, stabilizing semantic flow.</li>
-              <li><strong>MAP:</strong> Proposed a 2D semantic-map interpretation of hidden states, introducing Layer-Wise Criss-Cross Attention and Global–Local Logit Fusion to gather factual cues across layers.</li>
-              <li>Achieved state-of-the-art hallucination suppression on MME, POPE, and MMHal-Bench across multiple 7B LVLMs.</li>
-            </ul>
+          <div class="chapter-meta">
+            <span class="place">Chengdu, China</span><br/>
+            Apr 2024 — Nov 2025
           </div>
-          <div class="tl-research" style="margin-top:1rem;">
-            <div class="tl-research-title">Research 2: Token Efficiency &amp; Visual Token Engineering for LVLM Acceleration</div>
-            <ul class="tl-bullets">
-              <li><strong>STAR:</strong> Dual-phase token reduction — early-stage pruning via visual self-attention, late-stage pruning via cross-modal attention. Achieved 95% token reduction and 58% FLOPs reduction while maintaining 101.3% performance.</li>
-              <li>Integrated STAR into LLaVA-1.5, LLaVA-NeXT, mPLUG-Owl2, and Qwen-VL; outperformed FastV, FasterVLM, and SparseVLM baselines.</li>
-              <li><strong>SeeMe:</strong> First training-free hallucination mitigation framework via visual token engineering — Cross-Modal Attention Selection → Semantic Token Merging → Attention-Based Refinement.</li>
+        </div>
+
+        <div class="chapter-strand">
+          <div class="strand-mark">¶</div>
+          <div>
+            <div class="strand-title">i. Training-Free Decoding for Hallucination Mitigation in LVLMs</div>
+            <ul class="strand-points">
+              <li>Systematically analysed mainstream decoding strategies (DoLa, VCD, DAMO, SPIN) on LLaVA, mPLUG-Owl2 and InstructBLIP.</li>
+              <li><strong>DCLA</strong> — an inter-layer decoding mechanism aggregating cross-layer hidden states to construct dynamic semantic references, stabilising semantic flow.</li>
+              <li><strong>MAP</strong> — a 2-D semantic-map interpretation of hidden states with Layer-Wise Criss-Cross Attention and Global–Local Logit Fusion to gather factual cues across layers.</li>
+              <li>State-of-the-art hallucination suppression on MME, POPE and MMHal-Bench across multiple 7B LVLMs.</li>
             </ul>
           </div>
         </div>
-      </div>
+
+        <div class="chapter-strand">
+          <div class="strand-mark">¶</div>
+          <div>
+            <div class="strand-title">ii. Token Efficiency &amp; Visual Token Engineering</div>
+            <ul class="strand-points">
+              <li><strong>STAR</strong> — dual-phase token reduction: early-stage pruning via visual self-attention, late-stage via cross-modal attention. 95% token reduction, 58% FLOPs reduction, 101.3% performance.</li>
+              <li>Integrated STAR into LLaVA-1.5, LLaVA-NeXT, mPLUG-Owl2 and Qwen-VL — outperforming FastV, FasterVLM and SparseVLM baselines.</li>
+              <li><strong>SeeMe</strong> — the first training-free hallucination mitigation framework via visual token engineering: Cross-Modal Attention Selection → Semantic Token Merging → Attention-Based Refinement.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
 
       <!-- Beihang VIGA -->
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <div class="tl-header">
-            <div>
-              <div class="tl-org">VIGA Lab, Dept. of Computer Science — Beihang University</div>
-              <div class="tl-role">Undergraduate Research Assistant, supervised by Prof. Yang Gao</div>
-            </div>
-            <div style="text-align:right;">
-              <div class="tl-place">Beijing, China</div>
-              <div class="tl-period">Mar 2024 – Aug 2024</div>
-            </div>
+      <article class="chapter reveal">
+        <div class="chapter-head">
+          <div>
+            <h3 class="chapter-org">VIGA Lab <em>·</em> Dept. of Computer Science</h3>
+            <div class="chapter-role">Undergraduate Research Assistant · Beihang University · supervised by Prof. Yang Gao</div>
           </div>
-          <div class="tl-research">
-            <div class="tl-research-title">EEG-to-Image Generation via Diffusion Models &amp; BCI</div>
-            <ul class="tl-bullets">
-              <li>Reproduced classic and Stable Diffusion models, extended to Dream Diffusion for generating images from EEG signals.</li>
-              <li>Improved sentiment analysis capabilities with Control-Net for finer-grained, type-controlled image generation.</li>
+          <div class="chapter-meta">
+            <span class="place">Beijing, China</span><br/>
+            Mar 2024 — Aug 2024
+          </div>
+        </div>
+
+        <div class="chapter-strand">
+          <div class="strand-mark">¶</div>
+          <div>
+            <div class="strand-title">EEG-to-Image Generation via Diffusion Models &amp; BCI</div>
+            <ul class="strand-points">
+              <li>Reproduced classic and Stable Diffusion models; extended to <strong>Dream Diffusion</strong> for generating images directly from EEG signals.</li>
+              <li>Improved sentiment-analysis capabilities with Control-Net for finer-grained, type-controlled image generation.</li>
             </ul>
           </div>
         </div>
-      </div>
+      </article>
 
     </div>
   </div>
 </section>
 
-<!-- ── Footer ── -->
-<footer>
-  <p><strong>Jinhao You</strong> &nbsp;·&nbsp; MS EE @ UPenn &nbsp;·&nbsp;
-    <a href="mailto:you7@seas.upenn.edu">you7@seas.upenn.edu</a>
-  </p>
-  <p style="margin-top:.5rem; font-size:.8rem; opacity:.6;">© 2025 Jinhao You · Built with ♥</p>
+<!-- ───────────── COLOPHON ───────────── -->
+<footer class="colophon">
+  <div class="colophon-inner">
+    <div>
+      <div class="colophon-mark">J·Y</div>
+      <p>A folio assembled by Jinhao You — for the open consideration of collaborators, advisors and the merely curious. Written from Philadelphia, set in two serifs and a monospace.</p>
+    </div>
+    <div>
+      <h4>Write</h4>
+      <p>
+        <a href="mailto:tracyou07@gmail.com">tracyou07@gmail.com</a><br/>
+        <a href="mailto:you7@seas.upenn.edu">you7@seas.upenn.edu</a><br/>
+        +86 13438880039
+      </p>
+    </div>
+    <div>
+      <h4>Set in</h4>
+      <p>
+        Fraunces, by Undercase Type<br/>
+        Newsreader, by Production Type<br/>
+        JetBrains Mono, by JetBrains
+      </p>
+    </div>
+    <div class="colophon-note">
+      <span>© MMXXV &nbsp;·&nbsp; Jinhao You</span>
+      <span>Composed by hand · Set in the browser</span>
+    </div>
+  </div>
 </footer>
 
 <script>
-  // Scroll reveal
-  const els = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  els.forEach(el => obs.observe(el));
+  // Staggered entrance — observe once, then release.
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach((el) => io.observe(el));
 </script>
+
 </body>
 </html>
