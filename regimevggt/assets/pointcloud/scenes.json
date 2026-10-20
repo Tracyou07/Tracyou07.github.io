@@ -1,0 +1,27 @@
+{
+  "default_scene": "scannet-lounge",
+  "scenes": [
+    {
+      "id": "scannet-lounge",
+      "title": "Lounge",
+      "subtitle": "Indoor · ScanNet 0013",
+      "metadata": "scene0013/scene.json",
+      "binary": "scene0013/scene.bin",
+      "preview": "scene0013/preview.png",
+      "input_strip": "scene0013/inputs.webp",
+      "input_alt": "Four actual input views from ScanNet scene0013_02",
+      "cameras": "scene0013/cameras.json"
+    },
+    {
+      "id": "forest-road",
+      "title": "Forest road",
+      "subtitle": "Outdoor · 64 video frames",
+      "metadata": "forest-road/scene.json",
+      "binary": "forest-road/scene.bin",
+      "preview": "forest-road/preview.png",
+      "input_strip": "forest-road/inputs.webp",
+      "input_alt": "Four actual input frames from the forest road example video",
+      "cameras": "forest-road/cameras.json"
+    }
+  ]
+}

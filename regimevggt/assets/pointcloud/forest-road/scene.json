@@ -1,0 +1,41 @@
+{
+  "scene": "Forest road",
+  "label": "Outdoor · Forest road",
+  "source_url": "https://github.com/facebookresearch/vggt-omega/tree/main/examples",
+  "method": "RegimeVGGT",
+  "frames": 64,
+  "point_count": 300000,
+  "position_up": [
+    0,
+    0,
+    1
+  ],
+  "camera_position": [
+    0.3,
+    -2.8,
+    0.65
+  ],
+  "camera_target": [
+    0,
+    0,
+    0
+  ],
+  "resolution": [
+    518,
+    294
+  ],
+  "input_strip": "inputs.webp",
+  "input_strip_frames": [
+    "000001.jpg",
+    "000022.jpg",
+    "000043.jpg",
+    "000064.jpg"
+  ],
+  "orientation": "First predicted camera: x-right, y-forward, z-up; gravity not observed",
+  "source_commit": "afaa6a43898b3ec6c9ebbf5f606d3a4348527728",
+  "display_processing": "Per-frame 5th-percentile confidence filter; fixed-seed sampling; 0.5–99.5 percentile bounds; voxel downsampling; at most 300,000 points. Rigid orientation and normalization for viewing only.",
+  "geometry_source": "Predicted depth and predicted camera poses; no ground-truth geometry.",
+  "binary_sha256": "ce22a478810262d00b8072b69e0afa59c245f8ff50998e145db03776feeda2ba",
+  "note": "A fresh qualitative reconstruction, separate from the paper benchmark and the original static comparison.",
+  "source_label": "VGGT-Ω example video"
+}

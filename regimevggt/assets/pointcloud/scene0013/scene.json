@@ -1,0 +1,41 @@
+{
+  "scene": "ScanNet scene0013_02",
+  "label": "Indoor · Scene 0013",
+  "source_url": "https://www.scan-net.org/",
+  "method": "RegimeVGGT",
+  "frames": 200,
+  "point_count": 300000,
+  "position_up": [
+    0,
+    0,
+    1
+  ],
+  "camera_position": [
+    1.55,
+    -1.85,
+    1.25
+  ],
+  "camera_target": [
+    0,
+    0,
+    0
+  ],
+  "resolution": [
+    518,
+    392
+  ],
+  "input_strip": "inputs.webp",
+  "input_strip_frames": [
+    "000000.jpg",
+    "000366.jpg",
+    "000739.jpg",
+    "001155.jpg"
+  ],
+  "orientation": "First supplied pose rotation only; no GT translation, geometry, or scale",
+  "source_commit": "afaa6a43898b3ec6c9ebbf5f606d3a4348527728",
+  "display_processing": "Per-frame median confidence filter; fixed-seed sampling; 0.5–99.5 percentile bounds; voxel downsampling; at most 300,000 points. Rigid orientation and normalization for viewing only.",
+  "geometry_source": "Predicted depth and predicted camera poses; no ground-truth geometry.",
+  "binary_sha256": "e1ae1f254f9e7141b3de6600ea6a47fa39e56605930f58eabf01816c9c0f053a",
+  "note": "A fresh qualitative reconstruction, separate from the paper benchmark and the original static comparison.",
+  "source_label": "ScanNet"
+}

@@ -1,0 +1,18 @@
+Three.js 0.186.1 (MIT)
+Official npm package: https://www.npmjs.com/package/three/v/0.186.1
+Official release: https://github.com/mrdoob/three.js/tree/r186
+
+Files downloaded from the pinned official npm package via unpkg / jsDelivr:
+https://unpkg.com/three@0.186.1/build/three.module.js
+https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.core.js
+https://unpkg.com/three@0.186.1/examples/jsm/controls/OrbitControls.js
+https://unpkg.com/three@0.186.1/LICENSE
+https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineSegments2.js
+https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineSegmentsGeometry.js
+https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineMaterial.js
+
+Local integration changes: OrbitControls.js imports './three.module.js', and
+the three lines/*.js files import '../three.module.js', instead of the bare
+package identifier 'three'. No import map or CDN runtime dependency is needed.
+All other vendored source is unmodified. The included MIT license covers these
+Three.js files, including the examples addons.
