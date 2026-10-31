@@ -1,0 +1,24 @@
+type = "about"
+title = "About"
+
+[profile]
+research_interests = ["Large Vision-Language Models", "Hallucination Mitigation", "3D Reconstruction", "Token Efficiency", "Brain-Computer Interfaces"]
+
+[[sections]]
+id = "about"
+type = "markdown"
+source = "bio.md"
+title = "About Me"
+
+[[sections]]
+id = "education"
+type = "markdown"
+source = "education.md"
+title = "Education"
+
+[[sections]]
+id = "featured_publications"
+type = "publications"
+title = "Selected Publications"
+filter = "selected"
+limit = 5

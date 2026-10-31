@@ -1,0 +1,4 @@
+type = "publication"
+title = "Publications"
+description = "Research on vision-language models, hallucination mitigation, and efficient inference."
+source = "publications.bib"

@@ -1,0 +1,21 @@
+type = "card"
+title = "Research Experience"
+description = "Vision, language, and the geometry of seeing."
+
+[[items]]
+title = "GRASP Lab · Department of Robotics"
+subtitle = "Graduate Research Assistant · University of Pennsylvania"
+date = "Philadelphia, USA Oct 2025 — present"
+content = "**3D Reconstruction & World-Model Prediction**\n\n- Investigating single-view and multi-view 3D reconstruction pipelines; benchmarking depth-based (DPT) and correspondence-based (DUST3R, CUT3R, Human3R) methods for consistent geometry from monocular images.\n- Reproducing modern 3D point-correspondence methods to construct dense, temporally stable point clouds for downstream world-model prediction.\n- Building a world-model-style latent dynamics module to maintain temporal consistency across frames and reduce artefacts — mesh-body interpenetration, foot-sliding, geometry drift.\n- Exploring geometry-aware loss functions (Chamfer distance, normal consistency, contact constraints) to enforce physical plausibility in human–environment interactions."
+
+[[items]]
+title = "De Artificial Intelligence Lab"
+subtitle = "Undergraduate Research Assistant"
+date = "Chengdu, China Apr 2024 — Nov 2025"
+content = "**i. Training-Free Decoding for Hallucination Mitigation in LVLMs**\n\n- Systematically analysed mainstream decoding strategies (DoLa, VCD, DAMO, SPIN) on LLaVA, mPLUG-Owl2 and InstructBLIP.\n- DCLA — an inter-layer decoding mechanism aggregating cross-layer hidden states to construct dynamic semantic references, stabilising semantic flow.\n- MAP — a 2-D semantic-map interpretation of hidden states with Layer-Wise Criss-Cross Attention and Global–Local Logit Fusion to gather factual cues across layers.\n- State-of-the-art hallucination suppression on MME, POPE and MMHal-Bench across multiple 7B LVLMs.\n\n**ii. Token Efficiency & Visual Token Engineering**\n\n- STAR — dual-phase token reduction: early-stage pruning via visual self-attention, late-stage via cross-modal attention. 95% token reduction, 58% FLOPs reduction, 101.3% performance.\n- Integrated STAR into LLaVA-1.5, LLaVA-NeXT, mPLUG-Owl2 and Qwen-VL — outperforming FastV, FasterVLM and SparseVLM baselines.\n- SeeMe — the first training-free hallucination mitigation framework via visual token engineering: Cross-Modal Attention Selection → Semantic Token Merging → Attention-Based Refinement."
+
+[[items]]
+title = "VIGA Lab · Dept. of Computer Science"
+subtitle = "Undergraduate Research Assistant · Beihang University · supervised by Prof. Yang Gao"
+date = "Beijing, China Mar 2024 — Aug 2024"
+content = "**EEG-to-Image Generation via Diffusion Models & BCI**\n\n- Reproduced classic and Stable Diffusion models; extended to Dream Diffusion for generating images directly from EEG signals.\n- Improved sentiment-analysis capabilities with Control-Net for finer-grained, type-controlled image generation."

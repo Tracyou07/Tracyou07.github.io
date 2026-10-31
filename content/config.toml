@@ -1,0 +1,59 @@
+[site]
+title = "Jinhao You"
+description = "Research in vision-language models, hallucination mitigation, efficient inference, and 3D reconstruction."
+favicon = "/favicon.svg"
+last_updated = "October 31, 2026"
+
+[author]
+name = "Jinhao You"
+title = "Master's Candidate · Electrical Engineering"
+institution = "University of Pennsylvania · GRASP Lab"
+avatar = "/profile-beach.jpg"
+
+[social]
+email = "tracyou07@gmail.com"
+github = "https://github.com/Tracyou07"
+location = "Philadelphia, USA"
+
+[features]
+enable_likes = false
+enable_one_page_mode = false
+
+[i18n]
+enabled = false
+locales = ["en"]
+default_locale = "en"
+mode = "fixed"
+fixed_locale = "en"
+persist = false
+switcher = false
+
+[[navigation]]
+title = "About"
+target = "about"
+href = "/"
+type = "page"
+
+[[navigation]]
+title = "Publications"
+target = "publications"
+href = "/publications/"
+type = "page"
+
+[[navigation]]
+title = "Research"
+target = "research"
+href = "/research/"
+type = "page"
+
+[[navigation]]
+title = "Background"
+target = "cv"
+href = "/cv/"
+type = "page"
+
+[[navigation]]
+title = "RegimeVGGT"
+target = "regimevggt"
+href = "/regimevggt/"
+type = "link"
