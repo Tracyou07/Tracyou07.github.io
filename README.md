@@ -2,6 +2,8 @@
 
 Academic homepage migrated to [PRISM](https://github.com/xyjoey/PRISM), based on template commit `f2748db9821e98ed487eee5104ce4cc282aa8c1e`. PRISM is MIT licensed; see LICENSE.
 
+The root homepage now uses a classic academic layout inspired by [Hanzhe Hu's homepage](https://hzhupku.github.io/): a centered white document, portrait beside the biography, blue links, burgundy section headings, and publication figures alongside their citations. Responsive layout rules live in `src/app/academic.css`. Secondary pages retain the existing PRISM layout. The root homepage uses Arial/Helvetica to match the reference; secondary pages retain their existing Times New Roman typography.
+
 ## Preview and build
 
 Use Node.js 22 or later. Run `npm ci`, then `npm run dev` for development. `npm run build` creates the static site in `out/`; `npm run check` checks TypeScript.
@@ -16,6 +18,7 @@ For a production preview: `python -m http.server 4173 --directory out`.
 - `content/research.toml`: research experience.
 - `content/cv.md`: education, tools and awards.
 - `public/profile-beach.jpg`: the user-selected beach portrait from the local 03_Personal folder.
+- `public/papers/`: reduced previews from the linked papers; see `SOURCES.md` for figure provenance. Publication metadata is unchanged.
 
 This first version migrates only the original root homepage at commit `2ea7b7e143577c07c47fa91b4f7e9945f5e023f4`. It does not import the local CV or verify/revise original research claims, paper metadata or dates. Existing author lists ending in “et al.” remain incomplete as in the source. English-only content is intentional for this first migration.
 

@@ -158,7 +158,7 @@ export default function Navigation({
   }, [measureIndicator]);
 
   return (
-    <Disclosure as="nav" className="fixed top-0 left-0 right-0 z-50">
+    <Disclosure as="nav" data-site-navigation className="fixed top-0 left-0 right-0 z-50">
       {({ open }) => (
         <>
           <motion.div
