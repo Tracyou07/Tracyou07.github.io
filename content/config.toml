@@ -2,7 +2,7 @@
 title = "Jinhao You"
 description = "Research in vision-language models, hallucination mitigation, efficient inference, and 3D reconstruction."
 favicon = "/favicon.svg"
-last_updated = "October 31, 2026"
+last_updated = "November 4, 2026"
 
 [author]
 name = "Jinhao You"
@@ -13,6 +13,7 @@ avatar = "/profile-beach.jpg"
 [social]
 email = "tracyou07@gmail.com"
 github = "https://github.com/Tracyou07"
+google_scholar = "https://scholar.google.com/citations?user=1mgqY5wAAAAJ&hl=en"
 location = "Philadelphia, USA"
 
 [features]

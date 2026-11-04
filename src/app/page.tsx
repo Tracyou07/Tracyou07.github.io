@@ -1,156 +1,74 @@
+import ReactMarkdown from 'react-markdown';
+import Image from 'next/image';
+import Link from 'next/link';
 import { getConfig } from '@/lib/config';
-import { getMarkdownContent, getBibtexContent, getTomlContent, getPageConfig } from '@/lib/content';
+import { getMarkdownContent, getBibtexContent, getPageConfig } from '@/lib/content';
 import { parseBibTeX } from '@/lib/bibtexParser';
-import HomePageClient, { type HomePageLocaleData } from '@/components/home/HomePageClient';
-import { Publication } from '@/types/publication';
-import { BasePageConfig, PublicationPageConfig, TextPageConfig, CardPageConfig } from '@/types/page';
-import { getRuntimeI18nConfig } from '@/lib/i18n/config';
-
-interface SectionConfig {
-  id: string;
-  type: 'markdown' | 'publications' | 'list';
-  title?: string;
-  source?: string;
-  filter?: string;
-  limit?: number;
-  content?: string;
-  publications?: Publication[];
-  items?: NewsItem[];
-}
-
-interface NewsItem {
-  date: string;
-  content: string;
-}
-
-type PageData =
-  | { type: 'about'; id: string; sections: SectionConfig[] }
-  | { type: 'publication'; id: string; config: PublicationPageConfig; publications: Publication[] }
-  | { type: 'text'; id: string; config: TextPageConfig; content: string }
-  | { type: 'card'; id: string; config: CardPageConfig };
-
-function processSections(sections: SectionConfig[], locale?: string): SectionConfig[] {
-  return sections.map((section: SectionConfig) => {
-    switch (section.type) {
-      case 'markdown':
-        return {
-          ...section,
-          content: section.source ? getMarkdownContent(section.source, locale) : '',
-        };
-      case 'publications': {
-        const bibtex = getBibtexContent('publications.bib', locale);
-        const allPubs = parseBibTeX(bibtex, locale);
-        const filteredPubs = section.filter === 'selected'
-          ? allPubs.filter((p) => p.selected)
-          : allPubs;
-        return {
-          ...section,
-          publications: filteredPubs.slice(0, section.limit || 5),
-        };
-      }
-      case 'list': {
-        const newsData = section.source ? getTomlContent<{ news: NewsItem[] }>(section.source, locale) : null;
-        return {
-          ...section,
-          items: newsData?.news || [],
-        };
-      }
-      default:
-        return section;
-    }
-  });
-}
-
-function loadPageDataForLocale(locale: string | undefined): HomePageLocaleData {
-  const localeConfig = getConfig(locale);
-  const enableOnePageMode = localeConfig.features.enable_one_page_mode;
-
-  const aboutConfig = getPageConfig<{ profile?: { research_interests?: string[] }; sections?: SectionConfig[] }>('about', locale);
-  const researchInterests = aboutConfig?.profile?.research_interests;
-
-  let pagesToShow: PageData[] = [];
-
-  if (enableOnePageMode) {
-    pagesToShow = localeConfig.navigation
-      .filter((item) => item.type === 'page')
-      .map((item) => {
-        const rawConfig = getPageConfig(item.target, locale);
-        if (!rawConfig) return null;
-
-        const pageConfig = rawConfig as BasePageConfig;
-
-        if (pageConfig.type === 'about' || 'sections' in (rawConfig as object)) {
-          return {
-            type: 'about',
-            id: item.target,
-            sections: processSections((rawConfig as { sections: SectionConfig[] }).sections || [], locale),
-          } as PageData;
-        }
-
-        if (pageConfig.type === 'publication') {
-          const pubConfig = pageConfig as PublicationPageConfig;
-          const bibtex = getBibtexContent(pubConfig.source, locale);
-          return {
-            type: 'publication',
-            id: item.target,
-            config: pubConfig,
-            publications: parseBibTeX(bibtex, locale),
-          } as PageData;
-        }
-
-        if (pageConfig.type === 'text') {
-          const textConfig = pageConfig as TextPageConfig;
-          return {
-            type: 'text',
-            id: item.target,
-            config: textConfig,
-            content: getMarkdownContent(textConfig.source, locale),
-          } as PageData;
-        }
-
-        if (pageConfig.type === 'card') {
-          return {
-            type: 'card',
-            id: item.target,
-            config: pageConfig as CardPageConfig,
-          } as PageData;
-        }
-
-        return null;
-      })
-      .filter((item): item is PageData => item !== null);
-  } else if (aboutConfig) {
-    pagesToShow = [{
-      type: 'about',
-      id: 'about',
-      sections: processSections(aboutConfig.sections || [], locale),
-    }];
-  }
-
-  return {
-    author: localeConfig.author,
-    social: localeConfig.social,
-    features: localeConfig.features,
-    enableOnePageMode,
-    researchInterests,
-    pagesToShow,
-  };
-}
+import FormattedBibTeXText from '@/components/publications/FormattedBibTeXText';
+import type { CardPageConfig } from '@/types/page';
+import './academic.css';
 
 export default function Home() {
-  const baseConfig = getConfig();
-  const runtimeI18n = getRuntimeI18nConfig(baseConfig.i18n);
-  const targetLocales = runtimeI18n.enabled ? runtimeI18n.locales : [runtimeI18n.defaultLocale];
+  const config = getConfig();
+  const publications = parseBibTeX(getBibtexContent('publications.bib')).filter((paper) => paper.selected);
+  const research = getPageConfig<CardPageConfig>('research');
+  const about = getPageConfig<{ profile?: { research_interests?: string[] } }>('about');
+  const biography = getMarkdownContent('bio.md').split(/\r?\n\r?\n/)[0];
+  const news = publications.filter((paper) => paper.id === 'you2026regimevggt');
+  const honours = getMarkdownContent('cv.md').split('## Honours & Awards')[1]?.split('## Contact')[0];
 
-  const dataByLocale: Record<string, HomePageLocaleData> = {};
+  return (
+    <div className="academic-homepage">
+      <header className="academic-intro" id="about">
+        <Image className="academic-portrait" src={config.author.avatar} alt={config.author.name} width="200" height="250" />
+        <div className="academic-biography">
+          <h1>{config.author.name}</h1>
+          <nav className="academic-links" aria-label="Profile links">
+            {config.social.google_scholar && <a href={config.social.google_scholar}>Google Scholar</a>}
+            {config.social.github && <a href={config.social.github}>GitHub</a>}
+            <a href={`mailto:${config.social.email}`}>Email</a>
+            <Link href="/cv/" prefetch={false}>CV &amp; Background</Link>
+          </nav>
+          <div className="academic-copy"><ReactMarkdown>{biography}</ReactMarkdown></div>
+          {about?.profile?.research_interests && <p>My research interests include {about.profile.research_interests.map((interest) => interest.toLowerCase()).join(', ')}.</p>}
+          <p className="academic-email"><a href={`mailto:${config.social.email}`}>{config.social.email}</a><span aria-hidden="true"> · </span><a href="mailto:you7@seas.upenn.edu">you7@seas.upenn.edu</a></p>
+        </div>
+      </header>
 
-  for (const locale of targetLocales) {
-    dataByLocale[locale] = loadPageDataForLocale(locale);
-  }
+      <nav className="section-links" aria-label="Page sections">
+        <a href="#news">News</a><a href="#publications">Publications</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#honours">Honours &amp; Awards</a>
+      </nav>
 
-  if (!dataByLocale[runtimeI18n.defaultLocale]) {
-    dataByLocale[runtimeI18n.defaultLocale] = loadPageDataForLocale(undefined);
-  }
+      {news.length > 0 && <section id="news" className="academic-section">
+        <h2>News</h2>
+        <ul className="academic-news">{news.map((paper) => <li key={paper.id}><span className="news-date">[{paper.year}]</span> <Link href="/regimevggt/" prefetch={false}>RegimeVGGT</Link> — {paper.conference} {paper.year}, <strong>Poster</strong>.</li>)}</ul>
+      </section>}
 
-  return <HomePageClient dataByLocale={dataByLocale} defaultLocale={runtimeI18n.defaultLocale} />;
+      <section id="publications" className="academic-section">
+        <div className="academic-section-heading"><h2>Publications</h2><span>Full list: <Link href="/publications/" prefetch={false}>all publications</Link>{config.social.google_scholar && <> / <a href={config.social.google_scholar}>Google Scholar</a></>}</span></div>
+        <div className="academic-papers">{publications.map((paper) => {
+          const isRegime = paper.id === 'you2026regimevggt';
+          const destination = isRegime ? '/regimevggt/' : paper.url;
+          return <article className={`academic-paper${paper.preview || isRegime ? '' : ' academic-paper-text'}`} key={paper.id}>
+            {(paper.preview || isRegime) && <a className="paper-image-link" href={destination} aria-label={`Read ${paper.title}`}><Image src={paper.preview || '/regimevggt/assets/overview.webp'} alt={`${paper.title} — method overview`} width="240" height="145" loading="lazy" /></a>}
+            <div>
+              <h3>{destination ? <a href={destination}><FormattedBibTeXText nodes={paper.titleNodes} fallback={paper.title} /></a> : <FormattedBibTeXText nodes={paper.titleNodes} fallback={paper.title} />}</h3>
+              <p className="paper-authors">{paper.authors.map((author, index) => <span key={`${author.name}-${index}`}>{index > 0 && ', '}{author.isHighlighted ? <strong>{author.name}</strong> : author.name}{author.isCorresponding && <sup>†</sup>}</span>)}</p>
+              <p className="paper-venue">{paper.conference || paper.journal}, {paper.year}{isRegime && <> · <strong className="paper-highlight">Poster</strong></>}</p>
+              <p className="paper-links">{paper.url && <a href={paper.url}>[Paper]</a>}{isRegime && <Link href="/regimevggt/" prefetch={false}>[Project]</Link>}{paper.code && <a href={paper.code}>[Code]</a>}</p>
+            </div>
+          </article>;
+        })}</div>
+      </section>
+
+      <section id="experience" className="academic-section">
+        <div className="academic-section-heading"><h2>Research Experience</h2><Link href="/research/" prefetch={false}>Research details</Link></div>
+        <ul className="academic-experience">{research?.items.map((item) => <li key={item.title}><div className="experience-heading"><strong>{item.title}</strong><span>{item.date}</span></div><p>{item.subtitle}</p></li>)}</ul>
+      </section>
+
+      <section id="education" className="academic-section"><h2>Education</h2><div className="academic-copy academic-education"><ReactMarkdown>{getMarkdownContent('education.md')}</ReactMarkdown></div></section>
+      {honours && <section id="honours" className="academic-section"><h2>Honours &amp; Awards</h2><div className="academic-copy"><ReactMarkdown>{honours}</ReactMarkdown></div></section>}
+      <footer className="academic-footer"><span>© {config.author.name}</span><span>Last updated: {config.site.last_updated}</span></footer>
+    </div>
+  );
 }

@@ -55,10 +55,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
   }, [theme, mounted]);
 
-  // Prevent flash of unstyled content
-  if (!mounted) {
-    return <div style={{ visibility: 'hidden' }}>{children}</div>;
-  }
-
+  // The head bootstrap sets the theme before paint; keep server-rendered content visible.
   return <>{children}</>;
 }
