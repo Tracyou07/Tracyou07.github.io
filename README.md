@@ -2,7 +2,7 @@
 
 Academic homepage migrated to [PRISM](https://github.com/xyjoey/PRISM), based on template commit `f2748db9821e98ed487eee5104ce4cc282aa8c1e`. PRISM is MIT licensed; see LICENSE.
 
-The root homepage now uses a classic academic layout inspired by [Hanzhe Hu's homepage](https://hzhupku.github.io/): a centered white document, portrait beside the biography, blue links, burgundy section headings, and publication figures alongside their citations. Responsive layout rules live in `src/app/academic.css`. Secondary pages retain the existing PRISM layout. The root homepage uses Arial/Helvetica to match the reference; secondary pages retain their existing Times New Roman typography.
+The root homepage now uses a classic academic layout inspired by [Hanzhe Hu's homepage](https://hzhupku.github.io/): a centered white document, portrait beside the biography, blue links, burgundy section headings, and publication figures alongside their citations. Responsive layout rules live in `src/app/academic.css`. The homepage, CV, Research and Publications pages share this document layout and Arial/Helvetica typography. All four pages use the same light appearance, blue links and burgundy headings; secondary pages provide a compact site navigation and matching footer. Publication search, year/type filters and BibTeX controls are retained.
 
 ## Preview and build
 
@@ -28,7 +28,7 @@ This first version migrates only the original root homepage at commit `2ea7b7e14
 
 The workflow builds pull requests without deployment and deploys pushes to `main` or manual runs. Deployment uses **GitHub Actions** as the Pages publishing source. Local builds do not publish; pushes to `main` run the build and deployment workflow.
 
-The template's Next.js dependency and matching ESLint configuration are updated within version 15 to 15.5.28. Headings and body text use Times New Roman, with Times and serif fallbacks.
+The template's Next.js dependency and matching ESLint configuration are updated within version 15 to 15.5.28. The active academic pages use Arial/Helvetica to match the selected reference.
 
 The unused `svg2ico` development tool is omitted; the site uses an SVG favicon directly.
 

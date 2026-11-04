@@ -6,7 +6,6 @@ import { getMarkdownContent, getBibtexContent, getPageConfig } from '@/lib/conte
 import { parseBibTeX } from '@/lib/bibtexParser';
 import FormattedBibTeXText from '@/components/publications/FormattedBibTeXText';
 import type { CardPageConfig } from '@/types/page';
-import './academic.css';
 
 export default function Home() {
   const config = getConfig();

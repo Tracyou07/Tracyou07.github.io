@@ -61,7 +61,7 @@ export default function PublicationsList({ config, publications, embedded = fals
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
         >
@@ -82,6 +82,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                         <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-400" />
                         <input
                             type="text"
+                            aria-label={messages.publications.searchPlaceholder}
                             placeholder={messages.publications.searchPlaceholder}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -89,6 +90,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                         />
                     </div>
                     <button
+                        aria-expanded={showFilters}
                         onClick={() => setShowFilters(!showFilters)}
                         className={cn(
                             "flex items-center justify-center px-4 py-2 rounded-lg border transition-all duration-200",
@@ -118,6 +120,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                     </label>
                                     <div className="flex flex-wrap gap-2">
                                         <button
+                                            aria-pressed={selectedYear === 'all'}
                                             onClick={() => setSelectedYear('all')}
                                             className={cn(
                                                 "px-3 py-1 text-xs rounded-full transition-colors",
@@ -131,6 +134,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                         {years.map(year => (
                                             <button
                                                 key={year}
+                                                aria-pressed={selectedYear === year}
                                                 onClick={() => setSelectedYear(year)}
                                                 className={cn(
                                                     "px-3 py-1 text-xs rounded-full transition-colors",
@@ -152,6 +156,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                     </label>
                                     <div className="flex flex-wrap gap-2">
                                         <button
+                                            aria-pressed={selectedType === 'all'}
                                             onClick={() => setSelectedType('all')}
                                             className={cn(
                                                 "px-3 py-1 text-xs rounded-full transition-colors",
@@ -165,6 +170,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                         {types.map(type => (
                                             <button
                                                 key={type}
+                                                aria-pressed={selectedType === type}
                                                 onClick={() => setSelectedType(type)}
                                                 className={cn(
                                                     "px-3 py-1 text-xs rounded-full capitalize transition-colors",
@@ -194,17 +200,17 @@ export default function PublicationsList({ config, publications, embedded = fals
                     filteredPublications.map((pub, index) => (
                         <motion.div
                             key={pub.id}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={false}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.1 * index }}
-                            className="bg-white dark:bg-neutral-900 p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 hover:shadow-md transition-all duration-200"
+                            className="academic-publication bg-white dark:bg-neutral-900 p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 hover:shadow-md transition-all duration-200"
                         >
                             <div className="flex flex-col md:flex-row gap-6">
-                                {pub.preview && (
-                                    <div className="w-full md:w-48 flex-shrink-0">
+                                {(pub.preview || pub.id === 'you2026regimevggt') && (
+                                    <div className="academic-publication-image w-full md:w-48 flex-shrink-0">
                                         <div className="aspect-video md:aspect-[4/3] relative rounded-lg overflow-hidden bg-neutral-100 dark:bg-neutral-800">
                                             <Image
-                                                src={`/papers/${pub.preview}`}
+                                                src={pub.preview ? (pub.preview.startsWith('/') ? pub.preview : `/papers/${pub.preview}`) : '/regimevggt/assets/overview.webp'}
                                                 alt={pub.title}
                                                 fill
                                                 className="object-cover"

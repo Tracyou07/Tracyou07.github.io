@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { TextPageConfig } from '@/types/page';
 
@@ -12,11 +11,9 @@ interface TextPageProps {
 
 export default function TextPage({ config, content, embedded = false }: TextPageProps) {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className={embedded ? "" : "max-w-3xl mx-auto"}
+        <div
+
+            className="academic-document"
         >
             <h1 className={`${embedded ? "text-2xl" : "text-4xl"} font-serif font-bold text-primary mb-4`}>{config.title}</h1>
             {config.description && (
@@ -54,6 +51,6 @@ export default function TextPage({ config, content, embedded = false }: TextPage
                     {content}
                 </ReactMarkdown>
             </div>
-        </motion.div>
+        </div>
     );
 }

@@ -1,5 +1,9 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import type { SiteConfig } from '@/lib/config';
+
 import PublicationsList from '@/components/publications/PublicationsList';
 import TextPage from '@/components/pages/TextPage';
 import CardPage from '@/components/pages/CardPage';
@@ -19,9 +23,11 @@ export type DynamicPageLocaleData =
 interface DynamicPageClientProps {
   dataByLocale: Record<string, DynamicPageLocaleData>;
   defaultLocale: string;
+  siteConfig: Pick<SiteConfig, 'site' | 'author' | 'navigation'>;
 }
 
-export default function DynamicPageClient({ dataByLocale, defaultLocale }: DynamicPageClientProps) {
+export default function DynamicPageClient({ dataByLocale, defaultLocale, siteConfig }: DynamicPageClientProps) {
+  const pathname = usePathname();
   const locale = useLocaleStore((state) => state.locale);
   const fallback = dataByLocale[defaultLocale] || Object.values(dataByLocale)[0];
   const pageData = dataByLocale[locale] || fallback;
@@ -31,7 +37,15 @@ export default function DynamicPageClient({ dataByLocale, defaultLocale }: Dynam
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="academic-homepage academic-subpage">
+      <header className="academic-page-header">
+        <Link href="/" className="academic-page-brand">{siteConfig.author.name}</Link>
+        <nav className="academic-links" aria-label="Site navigation">
+          {siteConfig.navigation.map((item) => (
+            <Link key={item.target} href={item.href} prefetch={false} aria-current={pathname === item.href ? 'page' : undefined}>{item.title}</Link>
+          ))}
+        </nav>
+      </header>
       {pageData.type === 'publication' && (
         <PublicationsList config={pageData.config} publications={pageData.publications} />
       )}
@@ -41,6 +55,7 @@ export default function DynamicPageClient({ dataByLocale, defaultLocale }: Dynam
       {pageData.type === 'card' && (
         <CardPage config={pageData.config} />
       )}
+      <footer className="academic-footer"><span>© {siteConfig.author.name}</span><span>Last updated: {siteConfig.site.last_updated}</span></footer>
     </div>
   );
 }
