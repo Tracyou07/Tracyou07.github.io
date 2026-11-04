@@ -3,6 +3,12 @@ title = "Research Experience"
 description = "Vision, language, and the geometry of seeing."
 
 [[items]]
+title = "OBSBOT"
+subtitle = "Research Intern · Camera Motion Control with VLA and WAM"
+date = "Hangzhou, China · Aug 10 – Nov 10, 2026"
+content = "**Multimodal Gradient Conflict and Synergy**\n\n- Investigating vision-language-action (VLA) and world-action models (WAM) for camera motion control.\n- Comparing the strengths and limitations of priors from video generation models and vision-language models (VLMs) for action post-training.\n- Studying multimodal gradient conflicts and synergy, with a focus on how different modalities interact during action learning."
+
+[[items]]
 title = "GRASP Lab · Department of Robotics"
 subtitle = "Graduate Research Assistant · University of Pennsylvania"
 date = "Philadelphia, USA Oct 2025 — present"
