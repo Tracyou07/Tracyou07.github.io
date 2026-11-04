@@ -35,7 +35,7 @@ export default function Home() {
       </header>
 
       <nav className="section-links" aria-label="Page sections">
-        <a href="#news">News</a><a href="#publications">Publications</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#honours">Honours &amp; Awards</a>
+        {news.length > 0 && <a href="#news">News</a>}<a href="#publications">Publications</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#honours">Honours &amp; Awards</a>
       </nav>
 
       {news.length > 0 && <section id="news" className="academic-section">
@@ -61,7 +61,7 @@ export default function Home() {
       </section>
 
       <section id="experience" className="academic-section">
-        <div className="academic-section-heading"><h2>Research Experience</h2><Link href="/research/" prefetch={false}>Research details</Link></div>
+        <div className="academic-section-heading"><h2>Experience</h2><Link href="/research/" prefetch={false}>Experience details</Link></div>
         <ul className="academic-experience">{research?.items.map((item) => <li key={item.title}><div className="experience-heading"><strong>{item.title}</strong><span>{item.date}</span></div><p>{item.subtitle}</p></li>)}</ul>
       </section>
 

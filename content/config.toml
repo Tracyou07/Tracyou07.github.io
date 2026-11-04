@@ -42,7 +42,7 @@ href = "/publications/"
 type = "page"
 
 [[navigation]]
-title = "Research"
+title = "Experience"
 target = "research"
 href = "/research/"
 type = "page"
@@ -52,9 +52,3 @@ title = "Background"
 target = "cv"
 href = "/cv/"
 type = "page"
-
-[[navigation]]
-title = "RegimeVGGT"
-target = "regimevggt"
-href = "/regimevggt/"
-type = "link"

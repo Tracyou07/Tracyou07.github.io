@@ -10,7 +10,7 @@ B.Eng. in Communication Engineering · GPA: 3.75/4.00
 B.Eng. · Joint-degree programme with UESTC
 
 
-## Research Experience
+## Experience
 
 **OBSBOT** · Research Intern\
 Hangzhou, China · Aug 10 – Nov 10, 2026\
@@ -19,6 +19,14 @@ Camera Motion Control with VLA and WAM
 - Investigating vision-language-action (VLA) and world-action models (WAM) for camera motion control.
 - Comparing the strengths and limitations of priors from video generation models and vision-language models (VLMs) for action post-training.
 - Studying multimodal gradient conflicts and synergy, with a focus on how different modalities interact during action learning.
+
+**Alibaba** · AI Agent Training & Optimization Intern\
+Hangzhou, China · May 1 – Aug 1, 2026\
+Agent Engineering for Business Applications
+
+- Building agent harnesses and workflows for business applications.
+- Constructing post-training data pipelines for agents, with teacher-model supervision.
+- Applying OPD to distill teacher-model guidance into student agents.
 
 ## Skills
 
@@ -41,4 +49,4 @@ Camera Motion Control with VLA and WAM
 
 +86 13438880039
 
-[Research experience](/research/) · [Publications](/publications/)
+[Experience](/research/) · [Publications](/publications/)
